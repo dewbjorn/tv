@@ -1,6 +1,6 @@
 export const ANALYTICS_ID = process.env.REACT_APP_ANALYTICS_ID;
 
-export const isTrackingEnabled = () => Boolean(ANALYTICS_ID) === true;
+export const isTrackingEnabled = () => Boolean(ANALYTICS_ID);
 
 export const TRACKING_EVENTS = {
   OPEN_CHANNEL: 'OPEN_CHANNEL',
