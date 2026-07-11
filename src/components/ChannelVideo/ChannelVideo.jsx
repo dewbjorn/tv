@@ -1,11 +1,10 @@
-import styled from '@emotion/styled';
 import React, { useEffect, useRef } from 'react';
 import { useHls } from '../../hooks/useHls';
 import { CloseButton } from '../CloseButton/CloseButton';
+import styles from './ChannelVideo.module.css';
 
-export const ChannelVideo = ({ sourceUrl, onCloseClick = () => {} }) => {
+export const ChannelVideo = ({ sourceUrl, onCloseClick }) => {
   const videoRef = useRef(null);
-
   const { isReady } = useHls(videoRef, sourceUrl);
 
   useEffect(() => {
@@ -22,26 +21,11 @@ export const ChannelVideo = ({ sourceUrl, onCloseClick = () => {} }) => {
   };
 
   return (
-    <Wrapper onKeyDown={onKeyDown}>
-      <TitleBar>
-        <CloseButton onClick={onCloseClick} color="#f00">Lol</CloseButton>
-      </TitleBar>
-
-      {/* eslint-disable-next-line max-len */}
-      <Video resizable controls ref={videoRef} src={sourceUrl} />
-    </Wrapper>
+    <div className={styles.wrapper} onKeyDown={onKeyDown}>
+      <div className={styles.titleBar}>
+        <CloseButton onClick={onCloseClick} color="#f00" />
+      </div>
+      <video className={styles.video} controls ref={videoRef} src={sourceUrl} />
+    </div>
   );
 };
-
-const Wrapper = styled.div`
-  width: 100%;
-`;
-
-const TitleBar = styled.div`
-  height: 30px;
-`;
-
-const Video = styled.video`
-  width: 100%;
-  height: calc(100% - 30px);
-`;

@@ -1,0 +1,12 @@
+.wrapper {
+  width: 100%;
+}
+
+.titleBar {
+  height: 30px;
+}
+
+.video {
+  width: 100%;
+  height: calc(100% - 30px);
+}
