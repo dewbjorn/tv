@@ -8,12 +8,11 @@ export const TRACKING_EVENTS = {
 };
 
 /* eslint-disable max-len */
-const CHANNEL_11_URL = 'https://kan11.media.kan.org.il/hls/live/2024514/2024514/master.m3u8';
-const CHANNEL_12_URL = 'https://mako-streaming.akamaized.net/stream/hls/live/2033791/k12makowad/index.m3u8?b-in-range=0-1800&_uid=8b6d7d32-3434-42f8-a115-ce9b04631681&user_id=6cf04f139114b11f566be3fa96891043&dxu=a9d78826-705e-41da-9d38-7147b7db6a1b&hdnea=st%3D1740136674%7Eexp%3D1740137574%7Eacl%3D%2F*%7Ehmac%3D07ba33148e6006c62be39a7d00b7169e7b6c813baa0d1346699840472bbdf07b';
-const CHANNEL_12_TICKET_PREFETCH_URL = 'https://mass.mako.co.il/ClicksStatistics/entitlementsServicesV2.jsp?et=egt';
-const CHANNEL_13_URL = 'https://dsk76kvc9kie6.cloudfront.net/media/87f59c77-03f6-4bad-a648-897e095e7360/profile/3/profileManifest.m3u8';
-const I24_NEWS_URL = 'https://bcovlive-a.akamaihd.net/d89ede8094c741b7924120b27764153c/eu-central-1/5377161796001/playlist.m3u8';
-const SEINFELD_URL = 'https://demo.streamplanet.tv/hls/seinfeld/src/index.m3u8';
+const CHANNEL_11_URL = 'https://kancdn.medonecdn.net/livehls/oil/kancdn-live/live/kan11/live.livx/playlist.m3u8?renditions&fmp4';
+const CHANNEL_12_URL = 'https://mako-streaming.akamaized.net/stream/hls/live/2033791/k12dvr/index.m3u8';
+const CHANNEL_12_TICKET_PREFETCH_URL = 'https://mass.mako.co.il/ClicksStatistics/entitlementsServicesV2.jsp?et=ngt&lp=/stream/hls/live/2033791/k12dvr/index.m3u8?b-in-range=800-2700&rv=AKAMAI';
+const CHANNEL_13_URL = 'https://d198ztbnlup2iq.cloudfront.net/out/v1/2d9050c90fb94df8b78d1d98306a1a65/index_1.m3u8';
+const I24_NEWS_URL = 'https://i24newshebrew-cdn.encoders.immergo.tv/2/streamPlaylist.m3u8';
 
 export const channels = [
   {
@@ -45,9 +44,5 @@ export const channels = [
   {
     name: 'i24News',
     url: I24_NEWS_URL
-  },
-  {
-    name: 'Seinfeld',
-    url: SEINFELD_URL
   }
 ];
