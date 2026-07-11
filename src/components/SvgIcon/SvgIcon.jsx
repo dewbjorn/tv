@@ -1,17 +1,12 @@
 import React from 'react';
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
+import styles from './SvgIcon.module.css';
 
-export const SvgIcon = styled(({ Icon, className, ...props }) => (
-  <i className={`${className} ${Icon}`} {...props}>
+export const SvgIcon = ({ Icon, color, size, className, ...props }) => (
+  <i
+    className={`${styles.icon}${className ? ` ${className}` : ''}`}
+    style={{ color, width: size, height: size }}
+    {...props}
+  >
     <Icon />
   </i>
-))(
-  ({ size, color }) => css`
-    svg {
-      color: ${color};
-      height: ${size}px;
-      width: ${size}px;
-    }
-  `
 );
