@@ -1,45 +1,18 @@
-import styled from '@emotion/styled';
 import React from 'react';
 import { channels } from '../../config';
+import styles from './ChannelsNav.module.css';
 
 export const ChannelsNav = ({ onChannelClick }) => (
-  <ChannelsWrap>
+  <div className={styles.wrap}>
     {channels.map(channel => (
-      <ChannelButton
-        className="chan-button"
+      <button
         key={channel.name}
+        type="button"
+        className={styles.button}
         onClick={() => onChannelClick(channel)}
       >
-        {`${channel.name} `}
-      </ChannelButton>
+        {channel.name}
+      </button>
     ))}
-  </ChannelsWrap>
+  </div>
 );
-
-export const ChannelsWrap = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-`;
-
-export const ChannelButton = styled.button`
-  font-size: 22px;
-  width: 100px;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  cursor: pointer;
-  background: #ff2f2f;
-  color: #fff;
-  font-family: arial;
-  border-radius: 10px;
-  border: 0;
-
-  &:active {
-    box-shadow: inset 0px 0px 6px #000;
-  }
-`;
