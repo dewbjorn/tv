@@ -1,0 +1,12 @@
+.button {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+
+.button svg {
+  width: 25px;
+  height: 25px;
+  display: block;
+}
