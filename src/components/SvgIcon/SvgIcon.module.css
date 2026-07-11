@@ -1,0 +1,7 @@
+.icon {
+  display: inline-flex;
+}
+
+.icon svg {
+  display: block;
+}
