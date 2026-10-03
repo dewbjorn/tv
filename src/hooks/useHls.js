@@ -8,6 +8,7 @@ export const useHls = (videoRef, sourceUrl) => {
   useEffect(() => {
     const video = videoRef.current;
     setStatus('loading');
+    if (!sourceUrl) return undefined;
 
     if (Hls.isSupported()) {
       const hls = new Hls({ maxBufferSize: 10 * 1000 });

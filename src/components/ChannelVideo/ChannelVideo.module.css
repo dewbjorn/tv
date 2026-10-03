@@ -1,12 +1,104 @@
 .wrapper {
+  position: relative;
   width: 100%;
+  height: 100%;
+  background: #000;
 }
 
-.titleBar {
-  height: 30px;
+.idle {
+  cursor: none;
 }
 
 .video {
+  display: block;
   width: 100%;
-  height: calc(100% - 30px);
+  height: 100%;
+  object-fit: contain;
+}
+
+.topBar {
+  position: absolute;
+  inset: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px 48px;
+  background: linear-gradient(rgb(0 0 0 / 0.75), transparent);
+  transition: opacity 300ms ease-out;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.channelName {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.liveBadge {
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--danger);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  pointer-events: none;
+}
+
+.center > * {
+  pointer-events: auto;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgb(255 255 255 / 0.2);
+  border-top-color: var(--text);
+  border-radius: 50%;
+  animation: spin 900ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.errorText {
+  margin: 0;
+  font-size: 20px;
+  color: var(--text);
+}
+
+.retryButton {
+  padding: 10px 24px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.retryButton:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
 }

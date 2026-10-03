@@ -9,14 +9,7 @@ import styles from './ChannelsPage.module.css';
 export const ChannelsPage = () => {
   const [focusedChannel, setFocusedChannel] = useState(null);
 
-  const openChannel = async channel => {
-    if (channel.prefetch) {
-      const ok = await channel.prefetch();
-      if (!ok) {
-        alert('Failed streaming channel, please try again');
-        return;
-      }
-    }
+  const openChannel = channel => {
     trackChannelEvent(TRACKING_EVENTS.OPEN_CHANNEL, channel.name);
     setFocusedChannel(channel);
   };
@@ -35,7 +28,11 @@ export const ChannelsPage = () => {
       <ChannelsNav onChannelClick={openChannel} />
       <FadingBox shouldShow={Boolean(focusedChannel)}>
         {focusedChannel && (
-          <ChannelVideo onCloseClick={closeChannel} sourceUrl={focusedChannel.url} />
+          <ChannelVideo
+            key={focusedChannel.name}
+            channel={focusedChannel}
+            onCloseClick={closeChannel}
+          />
         )}
       </FadingBox>
     </main>

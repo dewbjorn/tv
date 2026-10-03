@@ -1,12 +1,29 @@
 .button {
-  background: transparent;
-  border: 0;
-  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
   padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.12);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 150ms ease-out;
+}
+
+.button:hover {
+  background: rgb(255 255 255 / 0.24);
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
 }
 
 .button svg {
-  width: 25px;
-  height: 25px;
+  width: 22px;
+  height: 22px;
   display: block;
 }
