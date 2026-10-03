@@ -1,27 +1,56 @@
-.wrap {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: clamp(12px, 2vw, 20px);
+  width: 100%;
 }
 
-.button {
-  font-size: 22px;
-  width: 100px;
-  height: 100px;
+.card {
+  position: relative;
+  aspect-ratio: 16 / 9;
   display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  cursor: pointer;
-  background: #ff2f2f;
-  color: #fff;
-  font-family: arial;
-  border-radius: 10px;
+  align-items: flex-end;
+  padding: clamp(12px, 2vw, 20px);
   border: 0;
+  border-radius: var(--radius);
+  background: linear-gradient(
+    135deg,
+    var(--channel-color),
+    color-mix(in srgb, var(--channel-color) 35%, var(--bg))
+  );
+  color: var(--text);
+  cursor: pointer;
+  text-align: start;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.35);
+  transition: transform 180ms ease-out, box-shadow 180ms ease-out;
 }
 
-.button:active {
-  box-shadow: inset 0px 0px 6px #000;
+.card:hover,
+.card:focus-visible {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 16px 40px rgb(0 0 0 / 0.5);
+}
+
+.card:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.card:active {
+  transform: scale(0.98);
+}
+
+.number {
+  position: absolute;
+  top: 14px;
+  inset-inline-start: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.name {
+  font-size: clamp(20px, 2.6vw, 28px);
+  font-weight: 800;
+  line-height: 1.1;
 }

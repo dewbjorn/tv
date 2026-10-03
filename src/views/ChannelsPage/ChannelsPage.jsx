@@ -27,13 +27,17 @@ export const ChannelsPage = () => {
   };
 
   return (
-    <div className={styles.wrap}>
+    <main className={styles.wrap}>
+      <header className={styles.header}>
+        <span className={styles.liveDot} />
+        <h1 className={styles.title}>שידור חי</h1>
+      </header>
       <ChannelsNav onChannelClick={openChannel} />
       <FadingBox shouldShow={Boolean(focusedChannel)}>
         {focusedChannel && (
           <ChannelVideo onCloseClick={closeChannel} sourceUrl={focusedChannel.url} />
         )}
       </FadingBox>
-    </div>
+    </main>
   );
 };

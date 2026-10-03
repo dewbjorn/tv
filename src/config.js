@@ -17,10 +17,12 @@ const I24_NEWS_URL = 'https://i24newshebrew-cdn.encoders.immergo.tv/2/streamPlay
 export const channels = [
   {
     name: 'רשת 13',
+    color: '#1f6feb',
     url: CHANNEL_13_URL
   },
   {
     name: 'קשת 12',
+    color: '#7b2ff7',
     url: CHANNEL_12_URL,
     async prefetch() {
       try {
@@ -39,10 +41,12 @@ export const channels = [
   },
   {
     name: 'כאן 11',
+    color: '#00a3a3',
     url: CHANNEL_11_URL
   },
   {
     name: 'i24News',
+    color: '#ff6a00',
     url: I24_NEWS_URL
   }
 ];
