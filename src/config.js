@@ -1,4 +1,4 @@
-export const ANALYTICS_ID = process.env.REACT_APP_ANALYTICS_ID;
+export const ANALYTICS_ID = import.meta.env.VITE_ANALYTICS_ID;
 
 export const isTrackingEnabled = () => Boolean(ANALYTICS_ID);
 
