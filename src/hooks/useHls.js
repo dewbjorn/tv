@@ -2,24 +2,43 @@ import Hls from 'hls.js';
 import { useEffect, useState } from 'react';
 
 export const useHls = (videoRef, sourceUrl) => {
-  const [isReady, setIsReady] = useState(false);
+  const [status, setStatus] = useState('loading');
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
-    if (isReady || !videoRef.current) return;
+    const video = videoRef.current;
+    setStatus('loading');
 
     if (Hls.isSupported()) {
       const hls = new Hls({ maxBufferSize: 10 * 1000 });
-      hls.loadSource(sourceUrl);
-      hls.attachMedia(videoRef.current);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        setIsReady(true);
+      hls.on(Hls.Events.MANIFEST_PARSED, () => setStatus('ready'));
+      hls.on(Hls.Events.ERROR, (_event, data) => {
+        if (data.fatal) setStatus('error');
       });
-    } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
-      // eslint-disable-next-line no-param-reassign
-      videoRef.current.src = sourceUrl;
-      setIsReady(true);
+      hls.loadSource(sourceUrl);
+      hls.attachMedia(video);
+      return () => hls.destroy();
     }
-  }, [videoRef, sourceUrl, isReady]);
 
-  return { isReady };
+    if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      const onReady = () => setStatus('ready');
+      const onError = () => setStatus('error');
+      video.addEventListener('loadedmetadata', onReady);
+      video.addEventListener('error', onError);
+      video.src = sourceUrl;
+      return () => {
+        video.removeEventListener('loadedmetadata', onReady);
+        video.removeEventListener('error', onError);
+        video.removeAttribute('src');
+        video.load();
+      };
+    }
+
+    setStatus('error');
+    return undefined;
+  }, [videoRef, sourceUrl, attempt]);
+
+  const retry = () => setAttempt(n => n + 1);
+
+  return { status, retry };
 };

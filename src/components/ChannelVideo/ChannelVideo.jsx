@@ -5,14 +5,14 @@ import styles from './ChannelVideo.module.css';
 
 export const ChannelVideo = ({ sourceUrl, onCloseClick }) => {
   const videoRef = useRef(null);
-  const { isReady } = useHls(videoRef, sourceUrl);
+  const { status } = useHls(videoRef, sourceUrl);
 
   useEffect(() => {
-    if (isReady) {
+    if (status === 'ready') {
       videoRef.current.play();
       videoRef.current.focus();
     }
-  }, [isReady]);
+  }, [status]);
 
   const onKeyDown = e => {
     if (e.key === 'Escape') {
@@ -25,7 +25,7 @@ export const ChannelVideo = ({ sourceUrl, onCloseClick }) => {
       <div className={styles.titleBar}>
         <CloseButton onClick={onCloseClick} color="#f00" />
       </div>
-      <video className={styles.video} controls ref={videoRef} src={sourceUrl} />
+      <video className={styles.video} controls ref={videoRef} />
     </div>
   );
 };
