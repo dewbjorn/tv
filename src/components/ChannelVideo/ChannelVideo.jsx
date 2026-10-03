@@ -1,24 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHls } from '../../hooks/useHls';
 import { CloseButton } from '../CloseButton/CloseButton';
+import { SvgIcon } from '../SvgIcon/SvgIcon';
+import chevron from './chevron.svg?react';
 import styles from './ChannelVideo.module.css';
 
 const IDLE_MS = 3000;
 
-export const ChannelVideo = ({ channel, onCloseClick }) => {
+export const ChannelVideo = ({ channel, onCloseClick, onPrevClick, onNextClick }) => {
   const videoRef = useRef(null);
   const idleTimer = useRef(null);
+  const isMounted = useRef(true);
   const [isIdle, setIsIdle] = useState(false);
   const [prefetchStatus, setPrefetchStatus] = useState(channel.prefetch ? 'loading' : 'done');
 
   const runPrefetch = async () => {
     setPrefetchStatus('loading');
     const ok = await channel.prefetch();
-    setPrefetchStatus(ok ? 'done' : 'error');
+    if (isMounted.current) setPrefetchStatus(ok ? 'done' : 'error');
   };
 
   useEffect(() => {
     if (channel.prefetch) runPrefetch();
+    return () => {
+      isMounted.current = false;
+    };
   }, [channel]);
 
   const sourceUrl = prefetchStatus === 'done' ? channel.url : null;
@@ -27,7 +33,10 @@ export const ChannelVideo = ({ channel, onCloseClick }) => {
 
   useEffect(() => {
     if (status === 'ready') {
-      videoRef.current.play();
+      videoRef.current.play().catch(error => {
+        // Switching channels mid-load aborts the pending play(); that is expected.
+        if (error.name !== 'AbortError') throw error;
+      });
       videoRef.current.focus();
     }
   }, [status]);
@@ -40,24 +49,20 @@ export const ChannelVideo = ({ channel, onCloseClick }) => {
 
   useEffect(() => {
     wake();
-    return () => clearTimeout(idleTimer.current);
+    window.addEventListener('keydown', wake);
+    return () => {
+      clearTimeout(idleTimer.current);
+      window.removeEventListener('keydown', wake);
+    };
   }, []);
 
   const retry = () => (prefetchStatus === 'error' ? runPrefetch() : retryHls());
-
-  const onKeyDown = e => {
-    wake();
-    if (e.key === 'Escape') {
-      onCloseClick();
-    }
-  };
 
   const showChrome = !isIdle || status !== 'ready';
 
   return (
     <div
       className={`${styles.wrapper} ${showChrome ? '' : styles.idle}`}
-      onKeyDown={onKeyDown}
       onMouseMove={wake}
       onTouchStart={wake}
     >
@@ -68,7 +73,25 @@ export const ChannelVideo = ({ channel, onCloseClick }) => {
           <span className={styles.liveBadge}>LIVE</span>
           {channel.name}
         </h2>
-        <CloseButton onClick={onCloseClick} />
+        <div className={styles.controls}>
+          <button
+            type="button"
+            className={`${styles.iconButton} ${styles.prev}`}
+            onClick={onPrevClick}
+            aria-label="ערוץ קודם"
+          >
+            <SvgIcon Icon={chevron} />
+          </button>
+          <button
+            type="button"
+            className={styles.iconButton}
+            onClick={onNextClick}
+            aria-label="ערוץ הבא"
+          >
+            <SvgIcon Icon={chevron} />
+          </button>
+          <CloseButton onClick={onCloseClick} />
+        </div>
       </div>
 
       {status === 'loading' && (
